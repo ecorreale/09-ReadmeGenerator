@@ -19,10 +19,6 @@ function writeToFile(fileName, data) {
 
 //ToDo: ![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)
 function init() {
-    // let myURL = ""
-    // var userName = ""
-    // var repoURL = ""
-    // var repoName 
     const apiUrl = "https://api.github.com"
 
     //  https://github.com/ecorreale/09-ReadmeGenerator
@@ -31,10 +27,10 @@ function init() {
 
     inquirer.prompt(Questions.Account).then(answers => {
         const profileApi = apiUrl + "/users/" + answers.userName
-       
+
         const repoName = answers.repoName
         const repoApi = profileApi + "/" + repoName.replace(/ /g, "-")
-        
+
         axios.get(profileApi).then((results) => {
             if (!results) {
                 console.error("Unable to reach supplied Repo URL")
