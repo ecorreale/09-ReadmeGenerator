@@ -1,5 +1,3 @@
-const validUrl = require('valid-url');
-const urlExists = require("url-exists");npm i
 
 exports.Repo = [{
     type: "input",
@@ -9,37 +7,23 @@ exports.Repo = [{
   {
     type: "input",
      name: "repoUrl",
-    message: "GitHub project URL?",
-    validate: function(value) {
-
-      console.log("Validating provided URL")
-      
-      var IsValid = validUrl.isUri(value)
-      if (IsValid) {
-        urlExists(value, function (err, exists) {
-          if (exists) {
-            return true
-          } else {
-            console.log("Cannot resolve the provided URL")
-          }
-        });
-      } 
-
-      return "Please enter a vaild URL"
-
-    }
-  }
-];
+    message: "GitHub project URL?"
+  }];
 
 exports.Badges = [{
-type:"list",
-name: "badge"
-message:
-
-
-
-
-}]
+type: "checkbox",
+name: "prjBadges",
+message:"Select from available badges.",
+ choices: [
+     new inquirer.Separator("======= Platform & Version Support ========\n"),
+     {
+       name: "Latest version badge"
+     },
+     {
+       name: "GitHub last commit badge"
+     }
+    ]
+}];
 
 
 exports.HasContributors = [{
@@ -66,44 +50,44 @@ exports.GetContributors = [{
 
 exports.Sections = [{
     type: "input",
-    name: "projTitle",
-    message: "What is the title for your project?"
+    name: ""prjTitle",
+    message: "What is the title for your "project?"
   },
 
   {
     type: "input",
-    name: "projDesc",
-    message: "Project Description?"
+    name: ""prjDesc",
+    message: ""prject Description?"
   },
 
   {
     type: "input",
-    name: "projInstall",
-    message: "What are the steps required to install your project?"
+    name: ""prjInstall",
+    message: "What are the steps required to install your "prject?"
   },
 
   {
     type: "input",
-    name: "projUsage",
+    name: ""prjUsage",
     message: "Usage\nProvide instructions and examples for use. "
   },
 
   {
     type: "input",
-    name: "projTest",
+    name: ""prjTest",
     message: "\nSection: Testing\nCan you provide test instructions"
   },
 
   {
     type: "list",
-    name: "projLicense",
-    message: "Select a license for this project.",
+    name: ""prjLicense",
+    message: "Select a license for this "prject.",
     choices: ["MIT License (MIT)", "GNU General Public License v3.0 (GNU GPLv3)", "Apache License 2.0", "The Unlicense", "Other"]
   },
 
   {
     type: "input",
-    name: "projContact",
+    name: ""prjContact",
     message: "Can you provide an email address for the Questions section?"
   }
 ];
