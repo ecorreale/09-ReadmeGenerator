@@ -1,4 +1,6 @@
-exports.Account = [{
+const inquirer = require('inquirer')
+
+exports.AcctRepo = [{
 
     type: "input",
     name: "userName",
@@ -21,13 +23,13 @@ exports.Badges = [{
   choices: [
     new inquirer.Separator("======= Platform & Version Support ========\n"),
     {
-      name: "Latest version badge"
+      name: "Node: Latest Node version badge"
     },
     {
-      name: "GitHub last commit badge"
+      name: "GitHub: Last commit badge"
     },
     {
-      name: "Badges? We don't need no stink'n badges!"
+      name: "Badges: We don't need no stink'n badges!"
     }
   ]
 }];
