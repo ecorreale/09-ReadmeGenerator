@@ -3,7 +3,7 @@ const inquirer = require('inquirer')
 // ####################################################
 //          Username and repo Name Questions
 // ####################################################
-exports.AcctRepo = [{
+exports.Repo = [{
 
     type: "input",
     name: "userName",
@@ -19,24 +19,21 @@ exports.AcctRepo = [{
 ];
 
 
-
-
 // ####################################################
 //                 Badge Questions
 // ####################################################
 exports.IsBadgeNeeded = [{
   type: "confirm",
-  name: "IsBadgeNeeded",
-  message: "Would you like to include badge(s)?  (Enter for YES)"
+  name: "IsNeeded",
+  message: "Would you like to include any badge(s)?  (Enter for YES)"
 }];
 
 exports.Badges = [{
   type: "checkbox",
-  name: "badgesSelected",
+  name: "Choices",
   message: "Select from available badges.",
   // Choice Name Format [BadgeKey]:[Badge Description]
   choices: [
-    new inquirer.Separator("======= Platform & Version Support ========\n"),
     {
       name: "1: Latest Node version badge"
     },
@@ -44,7 +41,7 @@ exports.Badges = [{
       name: "2: GitHub, last commit badge"
     },
     {
-      name: "3: We don't need no stink'n badges!"
+      name: "3: License Badge"
     }
   ]
 }];
@@ -52,16 +49,16 @@ exports.Badges = [{
 // ####################################################
 //              Contributors Questions
 // ####################################################
-exports.AnyContributors = [{
+exports.IsContributorNeeded = [{
   type: "confirm",
-  name: "HasContributor",
+  name: "IsNeeded",
   message: "Do you have any GitHub Contributors? (Enter for YES)"
 }];
 
 
 exports.Contributors = [{
     type: "input",
-    name: "value",
+    name: "Username",
     message: "Enter Contributor's GitHub username."
   },
 
@@ -77,41 +74,41 @@ exports.Contributors = [{
 // ####################################################
 //             Document Content Questions
 // ####################################################
-exports.Sections = [{
+exports.Document = [{
     type: "input",
     name: "Title ",
-    message: "What is the title for your project ? "
+    message: "Title for your readme document? "
   },
 
   {
     type: "input",
     name: "Description ",
-    message: "Project Description ? "
+    message: "Description ? "
   },
 
   {
     type: "input",
     name: "Install",
-    message: "What are the steps required to install your project ? "
+    message: "\nInstallation Instructions\nWhat are the steps required to install your project? "
   },
 
   {
     type: "input",
     name: "Usage",
-    message: "Usage\nProvide instructions and examples for use. "
+    message: "\nUsage Section\nProvide instructions and examples for use. "
   },
 
   {
     type: "input",
-    name: "Test",
+    name: "Testing",
     message: "\nSection: Testing\nCan you provide test instructions"
   },
 
   {
     type: "list",
     name: "License",
-    message: "Select a license for this project",
-    choices: ["MIT License (MIT)", "GNU General Public License v3.0 (GNU GPLv3)", "Apache License 2.0", "The Unlicense", "Other"]
+    message: "\nLicense\nSelect a license for this project",
+    choices: ["MIT License (MIT)", "GNU General Public License v3.0 (GNU GPLv3)", "Apache License 2.0", "The Unlicense", "Other - I'll Enter in document myself"]
   },
 
   {
