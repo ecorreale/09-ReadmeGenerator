@@ -108,7 +108,13 @@ exports.Document = [{
     type: "list",
     name: "License",
     message: "\nLicense\nSelect a license for this project",
-    choices: ["MIT License (MIT)", "GNU General Public License v3.0 (GNU GPLv3)", "Apache License 2.0", "The Unlicense", "Other - I'll Enter in document myself"]
+    choices: [
+        "1. MIT License (MIT)", 
+        "2. GNU General Public License v3.0 (GNU GPLv3)", 
+        "3. Apache License 2.0", 
+        "4. The Unlicense", 
+        "5. Other - I'll Enter in document myself"
+      ]
   },
 
   {
