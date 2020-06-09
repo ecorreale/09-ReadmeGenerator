@@ -9,7 +9,8 @@ const MarkDown = require("./utils/generateMarkdown")
 var docData = {}
 
 
-function writeToFile(fileName, data) {
+function writeToFile(data) {
+    var filename = ".\Readme.md"
     fs.writeFile(fileName, data, function (err) {
         if (err) throw err;
         console.log("File Updated");
@@ -97,7 +98,8 @@ function DocumentBody() {
         docData["Contact"] = answers.Contact
 
     }).then(() => {
-        MarkDown(docData)
+       
+        writeToFile(MarkDown(docData)
     })
 }
 
