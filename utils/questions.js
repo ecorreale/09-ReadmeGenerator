@@ -46,30 +46,6 @@ exports.Badges = [{
   ]
 }];
 
-// ####################################################
-//              Contributors Questions
-// ####################################################
-exports.IsContributorNeeded = [{
-  type: "confirm",
-  name: "IsNeeded",
-  message: "Do you have any GitHub Contributors? (Enter for YES)"
-}];
-
-
-exports.Contributors = [{
-    type: "input",
-    name: "Username",
-    message: "Enter Contributor's GitHub username."
-  },
-
-  {
-    // Ask if more names need to be added
-    type: "confirm",
-    name: "askAgain",
-    message: "Add another contributor (Enter for YES)?"
-  }
-];
-
 
 // ####################################################
 //             Document Content Questions
@@ -109,13 +85,19 @@ exports.Document = [{
     name: "License",
     message: "\nLicense\nSelect a license for this project",
     choices: [
-        "1. MIT License (MIT)", 
-        "2. GNU General Public License v3.0 (GNU GPLv3)", 
-        "3. Apache License 2.0", 
-        "4. The Unlicense", 
+        "1. MIT License (MIT)",
+        "2. GNU General Public License v3.0 (GNU GPLv3)",
+        "3. Apache License 2.0",
+        "4. The Unlicense",
         "5. Other - I'll Enter in document myself"
       ]
   },
+
+  {
+    type: "input",
+    name: "Contributing",
+    message: "Please enter Contributing text if any"
+  }
 
   {
     type: "input",
