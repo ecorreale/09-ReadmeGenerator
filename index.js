@@ -10,7 +10,7 @@ var docData = {}
 
 
 function writeToFile(data) {
-    var filename = ".\Readme.md"
+    var fileName = "README.MD"
     fs.writeFile(fileName, data, function (err) {
         if (err) throw err;
         console.log("File Updated");
@@ -61,9 +61,10 @@ function Badges() {
 
 function GetBadges() {
 
-BadgeTable[0] = "![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)"
-BadgeTable[1] = "![GitHub Last Commit](https://img.shields.io/github/last-commit/" + docData.UserName + "/" + docData.RepoName +"?style=plastic)"
-BadgeTable[2] = "![GitHub](https://img.shields.io/github/license/"+ docData.UserName + "/" + docData.RepoName + "?style=plastic)"
+    var BadgeTable = []
+    BadgeTable[0] = "![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)"
+    BadgeTable[1] = "![GitHub Last Commit](https://img.shields.io/github/last-commit/" + docData.UserName + "/" + docData.RepoName + "?style=plastic)"
+    BadgeTable[2] = "![GitHub](https://img.shields.io/github/license/" + docData.UserName + "/" + docData.RepoName + "?style=plastic)"
     var badges = {}
 
     inquirer.prompt(Questions.Badges).then(answers => {
@@ -71,7 +72,7 @@ BadgeTable[2] = "![GitHub](https://img.shields.io/github/license/"+ docData.User
         (answers.Choices).map(item => {
 
             var selection = item.split(":")[0]
-            var index = selection -1
+            var index = selection - 1
             badges += BadgeTable[index]
         })
         docData["Badges"] = badges;
@@ -85,7 +86,6 @@ BadgeTable[2] = "![GitHub](https://img.shields.io/github/license/"+ docData.User
 
 
 function DocumentBody() {
-    console.log("Document Body")
 
     inquirer.prompt(Questions.Document).then(answers => {
         docData["Title"] = answers.Title
@@ -98,8 +98,8 @@ function DocumentBody() {
         docData["Contact"] = answers.Contact
 
     }).then(() => {
-       
-        writeToFile(MarkDown(docData)
+
+        writeToFile(MarkDown(docData))
     })
 }
 

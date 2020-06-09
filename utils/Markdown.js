@@ -82,6 +82,8 @@ function generateMarkdown(data) {
         Markdown += "### Questions"
         Markdown += "Email: ${data.Contact}"
     }
+
+    return Markdown
 }
 
 module.exports = generateMarkdown

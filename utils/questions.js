@@ -59,19 +59,22 @@ exports.Document = [{
   {
     type: "input",
     name: "Description ",
-    message: "Description ? "
+    message: "Description ? ",
+    default: "This is the Description Section of the Document"
   },
 
   {
     type: "input",
     name: "Install",
-    message: "\nInstallation Instructions\nWhat are the steps required to install your project? "
+    message: "\nInstallation Instructions\nWhat are the steps required to install your project? ",
+    default: "Install steps "
   },
 
   {
     type: "input",
     name: "Usage",
-    message: "\nUsage Section\nProvide instructions and examples for use. "
+    message: "\nUsage Section\nProvide instructions and examples for use. ",
+    default: "Instuctions for the project"
   },
 
   {
@@ -97,11 +100,12 @@ exports.Document = [{
     type: "input",
     name: "Contributing",
     message: "Please enter Contributing text if any"
-  }
+  },
 
   {
     type: "input",
     name: "Contact",
-    message: "Can you provide an email address for the Questions section?"
+    message: "Can you provide an email address for the Questions section?",
+    default: "ecorreale@yahoo.com"
   }
 ];
