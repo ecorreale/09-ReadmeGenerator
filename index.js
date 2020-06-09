@@ -4,7 +4,7 @@ const axios = require('axios')
 const fs = require('fs')
 
 const Questions = require("./utils/questions")
-const MarkDown = require("./utils/generateMarkdown")
+const MarkDown = require("./utils/Markdown")
 
 var docData = {}
 
@@ -39,6 +39,7 @@ function init() {
                 docData["ProfileImage"] = results.data.avatar_url
                 docData["ProfileEmail"] = results.data.email
 
+
             })
             .then(() => {
 
@@ -59,6 +60,7 @@ function Badges() {
     })
 }
 
+
 function GetBadges() {
 
     var BadgeTable = []
@@ -78,6 +80,11 @@ function GetBadges() {
         docData["Badges"] = badges;
     }).then(() => {
 
+        console.log("---------------------------")
+        // console.log(docData)
+console.log(MarkDown(docData))
+
+
         DocumentBody()
     })
 }
@@ -89,6 +96,7 @@ function DocumentBody() {
 
     inquirer.prompt(Questions.Document).then(answers => {
         docData["Title"] = answers.Title
+        docDate["ShowToc"] = answers.TOC
         docData["Description"] = answers.Description
         docData["Install"] = answers.Install
         docData["Usage"] = answers.Usage
@@ -98,8 +106,9 @@ function DocumentBody() {
         docData["Contact"] = answers.Contact
 
     }).then(() => {
-
-        writeToFile(MarkDown(docData))
+var markdown = MarkDown(docData)
+console.log(markdown)
+        writeToFile(markdown)
     })
 }
 

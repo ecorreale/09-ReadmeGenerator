@@ -57,6 +57,12 @@ exports.Document = [{
   },
 
   {
+    type: "confirm",
+    name: "TOC ",
+    message: "Would you like to display a Table of Contents? "
+  },
+
+  {
     type: "input",
     name: "Description ",
     message: "Description ? ",

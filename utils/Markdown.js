@@ -1,4 +1,7 @@
 function generateMarkdown(data) {
+    console.log("In Markdown")
+    console.log(data)
+    
     var Markdown = []
 
     Markdown.push( "# Title:${data.title}")
@@ -34,7 +37,7 @@ function generateMarkdown(data) {
         Markdown.push("")
         Markdown.push("")
     }
-    console.log(Markdown)
+
     if (data.installation) {
         Markdown.push("## Installation Instructions")
         Markdown.push(data.installation)
