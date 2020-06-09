@@ -1,88 +1,89 @@
 function generateMarkdown(data) {
     var Markdown = []
 
-    Markdown += "# Title:${data.title}"
+    Markdown.push( "# Title:${data.title}")
 
-    Markdown += "### ![profile Image](${data.ProfileImage})"
+    Markdown.push("### ![profile Image](${data.ProfileImage})")
 
-    Markdown += "### Email: [${data.ProfileEmail}](MailTo:${data.ProfileEmail})"
+    Markdown.push("### Email: [${data.ProfileEmail}](MailTo:${data.ProfileEmail})")
 
 
 
-    Markdown += "### Badges"
+    Markdown.push("### Badges")
 
     data.Badges.forEach(function (badge, index) {
-        Markdown += badge
+        Markdown.push(badge)
     })
 
     if (data.ShowToc) {
-        Markdown += "## Table of Contents"
-        Markdown += "[Description](#Description)"
-        Markdown += "[Usage](#Usage)"
-        Markdown += "[Contributors](#Contributors)"
+        Markdown.push("## Table of Contents")
+        Markdown.push("[Description](#Description)")
+        Markdown.push("[Usage](#Usage)")
+        Markdown.push("[Contributors](#Contributors)")
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
 
 
 
     if (data.Description) {
-        Markdown += "## Description"
-        Markdown += data.Description
+        Markdown.push("## Description")
+        Markdown.push(data.Description)
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
-
+    console.log(Markdown)
     if (data.installation) {
-        Markdown += "## Installation Instructions"
-        Markdown += data.installation
+        Markdown.push("## Installation Instructions")
+        Markdown.push(data.installation)
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
 
 
     if (data.Usage) {
-        Markdown += "## Usage"
-        Markdown += data.Usage
+        Markdown.push("## Usage")
+        Markdown.push(data.Usage)
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
 
 
     if (data.License) {
-        Markdown += "### License"
-        Markdown += data.License
+        Markdown.push("### License")
+        Markdown.push(data.License)
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
 
     if (data.Contributing) {
-        Markdown += "## Contributing"
-        Markdown += data.Contributing
+        Markdown.push("## Contributing")
+        Markdown.push(data.Contributing)
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
 
 
     if (data.Test) {
-        Markdown += "## Tests"
-        Markdown += data.test
+        Markdown.push("## Tests")
+        Markdown.push(data.test)
 
-        Markdown += ""
-        Markdown += ""
+        Markdown.push("")
+        Markdown.push("")
     }
 
     if (data.Contact) {
-        Markdown += "### Questions"
-        Markdown += "Email: ${data.Contact}"
+        Markdown.push("### Questions")
+        Markdown.push("Email: ${data.Contact}")
     }
 
+    console.log(Markdown)
     return Markdown
 }
 
