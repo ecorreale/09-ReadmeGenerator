@@ -1,9 +1,10 @@
-@import ./readMe.css
-![profile Image](https://avatars3.githubusercontent.com/u/47666377?v=4)
+# undefined
+![profile Image](https://avatars3.githubusercontent.com/u/47666377?v=4){:height='36px' width='36px'}
 ### Email: None Provided
 ### Badges
 ![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/ecorreale/09-ReadmeGenerator?style=plastic)
+![GitHub](https://img.shields.io/github/license/ecorreale/09-ReadmeGenerator?style=plastic)
 ## Description
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 <br/>

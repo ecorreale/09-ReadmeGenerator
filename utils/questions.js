@@ -1,4 +1,32 @@
 const inquirer = require('inquirer')
+const axios = require("axios")
+const licenseApi = "https://api.github.com/licenses"
+
+var licenseArr = []
+
+function GetLicenseOptions() {
+
+  console.log("In Get License")
+  var licenseHash = {}
+  axios.get(licenseApi).then(results => {
+
+    if (!results) {
+      throw ("Unable to reach License API")
+    } else {
+      // Create lookup hash and license selection array
+      results.forEach(license => {
+        console.log(license)
+        var license = results.data.name
+        licenseHash[restults.data.key] = license
+        licenseArr.push(license)
+      })
+    }
+  }).then(() => {
+    console.log(licenseArr)
+    return licenseHash
+  })
+}
+
 
 // ####################################################
 //          Username and repo Name Questions
@@ -33,8 +61,7 @@ exports.Badges = [{
   name: "Choices",
   message: "Select from available badges.",
   // Choice Name Format [BadgeKey]:[Badge Description]
-  choices: [
-    {
+  choices: [{
       name: "1: Latest Node version badge"
     },
     {
@@ -48,32 +75,33 @@ exports.Badges = [{
 
 
 // ####################################################
-//             Document Content Questions
+//          Document Body Content Questions
 // ####################################################
 exports.Document = [{
     type: "input",
-    name: "Title ",
-    message: "Title for your readme document? "
+    name: "DocTitle ",
+    message: "Title for your readme document? ",
+    default: "09-Readme Generator"
   },
 
   {
     type: "confirm",
-    name: "TOC ",
+    name: "ShowTOC ",
     message: "Would you like to display a Table of Contents? "
   },
 
   {
     type: "input",
-    name: "Description ",
-    message: "Description ? ",
-    default: "This is the Description Section of the Document"
+    name: "DescriptionText",
+    message: "Project Description Text",
+    default: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   },
 
   {
     type: "input",
     name: "Install",
     message: "\nInstallation Instructions\nWhat are the steps required to install your project? ",
-    default: "Install steps "
+    default: "Install steps to follow"
   },
 
   {
@@ -88,19 +116,28 @@ exports.Document = [{
     name: "Testing",
     message: "\nSection: Testing\nCan you provide test instructions"
   },
-
   {
     type: "list",
     name: "License",
     message: "\nLicense\nSelect a license for this project",
-    choices: [
-        "1. MIT License (MIT)",
-        "2. GNU General Public License v3.0 (GNU GPLv3)",
-        "3. Apache License 2.0",
-        "4. The Unlicense",
-        "5. Other - I'll Enter in document myself"
-      ]
+    choices: [licenseArr]
   },
+
+  // {
+  //   type: "list",
+  //   name: "License",
+  //   message: "\nLicense\nSelect a license for this project",
+  //   choices: licenseArr
+
+  //   // [
+
+  //   //   "1. MIT License (MIT)",
+  //   //   "2. GNU General Public License v3.0 (GNU GPLv3)",
+  //   //   "3. Apache License 2.0",
+  //   //   "4. The Unlicense",
+  //   //   "5. Other - I'll Enter in document myself"
+  //   // ]
+  // },
 
   {
     type: "input",
@@ -115,3 +152,5 @@ exports.Document = [{
     default: "ecorreale@yahoo.com"
   }
 ];
+
+exports.GetLicenses = GetLicenseOptions()

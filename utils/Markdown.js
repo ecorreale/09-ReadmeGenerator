@@ -1,16 +1,14 @@
 function generateMarkdown(data) {
     console.log("In Markdown")
     console.log(data)
-    
+
     var Markdown = []
 
-    Markdown.push( "# Title:${data.title}")
+    Markdown.push( "# " + data.DocTitle)
 
-    Markdown.push("### ![profile Image](${data.ProfileImage})")
+    Markdown.push("![profile Image](" + data.ProfileImage + "){:height='36px' width='36px'}")
 
-    Markdown.push("### Email: [${data.ProfileEmail}](MailTo:${data.ProfileEmail})")
-
-
+    Markdown.push("### Email: " + data.eMail)
 
     Markdown.push("### Badges")
 
@@ -24,52 +22,43 @@ function generateMarkdown(data) {
         Markdown.push("[Usage](#Usage)")
         Markdown.push("[Contributors](#Contributors)")
 
-        Markdown.push("")
-        Markdown.push("")
+        Markdown.push("<br/>")
     }
 
 
 
-    if (data.Description) {
+    if (data.DescriptionText) {
         Markdown.push("## Description")
-        Markdown.push(data.Description)
-
-        Markdown.push("")
-        Markdown.push("")
+        Markdown.push(data.DescriptionText)
+        Markdown.push("<br/>")
     }
 
     if (data.installation) {
         Markdown.push("## Installation Instructions")
         Markdown.push(data.installation)
-
-        Markdown.push("")
-        Markdown.push("")
+        Markdown.push("<br/>")
     }
 
 
     if (data.Usage) {
         Markdown.push("## Usage")
         Markdown.push(data.Usage)
-
-        Markdown.push("")
-        Markdown.push("")
+        Markdown.push("<br/>")
     }
 
 
     if (data.License) {
         Markdown.push("### License")
         Markdown.push(data.License)
+        Markdown.push("")
 
-        Markdown.push("")
-        Markdown.push("")
     }
 
     if (data.Contributing) {
         Markdown.push("## Contributing")
         Markdown.push(data.Contributing)
+        Markdown.push("")
 
-        Markdown.push("")
-        Markdown.push("")
     }
 
 
