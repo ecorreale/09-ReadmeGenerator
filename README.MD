@@ -1,5 +1,5 @@
-# undefined
-![profile Image](https://avatars3.githubusercontent.com/u/47666377?v=4){:height='36px' width='36px'}
+@import "./readMe.css"
+![profile Image](https://avatars3.githubusercontent.com/u/47666377?v=4)
 ### Email: None Provided
 ### Badges
 ![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)
