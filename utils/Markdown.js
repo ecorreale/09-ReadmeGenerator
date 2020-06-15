@@ -1,30 +1,36 @@
 function generateMarkdown(data) {
-    console.log("In Markdown")
-    console.log(data)
 
+    // Text Array
     var Markdown = []
 
-    Markdown.push( "# " + data.DocTitle)
+    Markdown.push("# " + data.DocumentTitle)
+    Markdown.push("<img src='" + data.ProfileImage + "' width='125px' style='float:right'>")
 
-    Markdown.push("![profile Image](" + data.ProfileImage + "){:height='36px' width='36px'}")
+    if (data.ShowToc) {
+        Markdown.push(
+            ` <ul>
+            <li>[${data.DocumentTitle}](#${data.DocumentTitle}) </li>
+            <ul>
+                <li>[Description](#Description)</li>
+                <li>[Usage](#Usage)</li>
+                <li>[Comments}](#Comments)</li>
+            </ul>
+        </ul>`
+        )
+    }
 
-    Markdown.push("### Email: " + data.eMail)
+    if (data.License) {
+        Markdown.push("### Licensing")
+        Markdown.push("Licensed Under: " + data.License)
+        Markdown.push("<br>")
+    }
 
-    Markdown.push("### Badges")
+
+    // Markdown.push("### Badges")
 
     data.Badges.forEach(function (badge, index) {
         Markdown.push(badge)
     })
-
-    if (data.ShowToc) {
-        Markdown.push("## Table of Contents")
-        Markdown.push("[Description](#Description)")
-        Markdown.push("[Usage](#Usage)")
-        Markdown.push("[Contributors](#Contributors)")
-
-        Markdown.push("<br/>")
-    }
-
 
 
     if (data.DescriptionText) {
@@ -32,6 +38,12 @@ function generateMarkdown(data) {
         Markdown.push(data.DescriptionText)
         Markdown.push("<br/>")
     }
+
+
+    if (data.eMail) {
+        Markdown.push("### Email: " + data.eMail)
+    }
+
 
     if (data.installation) {
         Markdown.push("## Installation Instructions")
@@ -47,17 +59,10 @@ function generateMarkdown(data) {
     }
 
 
-    if (data.License) {
-        Markdown.push("### License")
-        Markdown.push(data.License)
-        Markdown.push("")
-
-    }
-
     if (data.Contributing) {
         Markdown.push("## Contributing")
         Markdown.push(data.Contributing)
-        Markdown.push("")
+        Markdown.push("<br/>")
 
     }
 
@@ -65,17 +70,17 @@ function generateMarkdown(data) {
     if (data.Test) {
         Markdown.push("## Tests")
         Markdown.push(data.test)
+        Markdown.push("<br/>")
 
-        Markdown.push("")
-        Markdown.push("")
     }
 
+
+    Markdown.push("### Comments/Questions")
     if (data.Contact) {
-        Markdown.push("### Questions")
-        Markdown.push("Email: ${data.Contact}")
+        Markdown.push(data.contact)
+    } else {
+        Markdown.push("Please contact me through GitHub")
     }
-
-    console.log(Markdown)
     return Markdown
 }
 

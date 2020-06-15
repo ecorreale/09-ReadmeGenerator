@@ -1,34 +1,6 @@
-// const inquirer = require('inquirer')
-
-const axios = require("axios")
-const licenseApi = "https://api.github.com/licenses"
 
 
 module.exports = {
-
-  // CREATE LICENSE SELCTION DICTIONARY
-  GetLicenseList: () => {
-
-    var licenseDict = {}
-    axios.get(licenseApi).then(results => {
-
-      if (!results) {
-
-        throw ("Unable to reach License API")
-      } else {
-
-        results.data.forEach(function (license) {
-          licenseDict[license.key] = license
-        })
-        licenseArr = Object.keys(licenseDict)
-      }
-
-    }).then(() => {
-
-      return licenseDict
-    })
-  },
-
 
   // ####################################################
   //          Username and repo Name Questions
@@ -38,81 +10,85 @@ module.exports = {
     AccountQuestions = [{
         type: "input",
         name: "userName",
-        message: "GitHub username.",
+        message: "Please enter your GitHub username:",
         default: "ecorreale"
       },
       {
         type: "input",
         name: "repoName",
-        message: "GitHub project Name?",
+        message: "\nWhat is the GitHub project Name:",
         default: "09-ReadmeGenerator"
-      }
-    ];
+      }]
     return AccountQuestions
   },
 
 
   // ####################################################
+  //             Document Title Question
+  // ####################################################
+
+    AskDocumemtTitle: AskDocumemtTitle = {
+    type: "input",
+    name: "DocumentTitle",
+    message: "\nTitle for your readme document? ",
+    default: "Readme Generator"
+
+  },
+
+  // ####################################################
   //                 Badge Questions
   // ####################################################
 
-  IsBadgeNeeded: IsBadgeNeeded = [{
+  IsBadgeNeeded: IsBadgeNeeded = {
     type: "confirm",
     name: "IsNeeded",
-    message: "Would you like to include any badge(s)?  (Enter for YES)"
-  }],
+    message: "\nWould you like to include any badge(s)?  (Enter for YES)"
+  },
 
 
   SelectBadge: (SelectionList) => {
-    var options = Object.keys(SelectionList)
 
-    var BadgeQuestion = [{
+    var SelectedBadges = {
       type: "checkbox",
       name: "Choices",
       message: "Select from available badges.",
-      choices: options
-    }]
-    return BadgeQuestion
+      choices: SelectionList
+    }
+    return SelectedBadges
   },
-
 
 
   // ####################################################
   //                 Select License Question
   // ####################################################
   SelectLicense: (SelectionList) => {
-    var options = Object.keys(SelectionList)
 
-    BadgeSelectionQuestion = [{
+    SelectedLicense = [{
       type: "list",
-      name: "License",
-      message: "\nLicense\nSelect a license for this project",
-      choices: options
+      name: "SelectedLicense",
+      message: "\nSelect a license for this project",
+      choices: SelectionList,
+      default: "MIT License"
     }]
-    return BadgeSelectionQuestion
+    return SelectedLicense
   },
 
 
   // ####################################################
   //          Document Body Content Questions
   // ####################################################
-  DocumentQuestions:Document [{
-      type: "input",
-      name: "DocTitle ",
-      message: "Title for your readme document? ",
-      default: "09-Readme Generator"
-    },
+  DocumentQuestions:DocumentQuestions = [
 
     {
       type: "confirm",
-      name: "ShowTOC ",
-      message: "Would you like to display a Table of Contents? "
+      name: "ShowTOC",
+      message: "\nWould you like to display a Table of Contents? "
     },
 
     {
       type: "input",
       name: "DescriptionText",
-      message: "Project Description Text",
+      message: "\nProject Description Text",
       default: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
 
@@ -139,14 +115,15 @@ module.exports = {
     {
       type: "input",
       name: "Contributing",
-      message: "Please enter Contributing text if any"
+      message: "\nPlease enter Contributing text if any"
     },
 
     {
       type: "input",
       name: "Contact",
-      message: "Can you provide an email address for the Questions section?",
+      message: "\Please provide an email address for the Questions section?",
       default: "ecorreale@yahoo.com"
     }
   ]
-} // \Module.Exports
+} // Close Module.Exports
+

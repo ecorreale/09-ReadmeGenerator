@@ -1,136 +1,266 @@
+// Author: Ernest Correale
+// Date: June-2020
+// Purpose: Create Readme file from user input
+
+
 const inquirer = require('inquirer')
-const path = require('path');
+const colors = require('colors/safe')
 const axios = require('axios')
 const fs = require('fs')
 
 const Questions = require("./utils/questions")
 const MarkDown = require("./utils/Markdown")
 
-$licenses = Questions.GetLicenses
-
+const apiUrl = "https://api.github.com"
 const licenseApi = "https://api.github.com/licenses"
-var licenseHash = {}
-var licenseArr = []
-var IDX = 1
 
+var licenseDict = {}
 var docData = {}
 
+
+// Fill license dictionary async
+axios.get(licenseApi).then(results => {
+
+    if (!results) {
+        throw ("Unable to reach License API")
+    } else {
+
+        results.data.forEach(function (license) {
+            licenseDict[license.name] = license
+        })
+    }
+})
+
+init()
 function init() {
-    const apiUrl = "https://api.github.com"
-return
+    PrintHeader("Github Readme Generator")
 
-    inquirer.prompt(Questions.Repo).then(answers => {
-            var eMailAddr
-            const profileApi = apiUrl + "/users/" + answers.userName
+    inquirer.prompt(Questions.Account()).then(answers => {
+        var eMailAddr
+        const profileApi = apiUrl + "/users/" + answers.userName
+        const repoName = answers.repoName
 
-            const repoName = answers.repoName
-            const repoApi = apiUrl + "/repos/" + answers.userName + "/" + repoName.replace(/ /g, "-")
+        axios.get(profileApi).then(results => {
+                if (!results) {
+                    console.error("Unable to reach supplied Repo URL")
+                    throw "Please confoirm the supplied repo URL is correct and try again"
+                }
+                var data = results.data
 
-                axios.get(profileApi).then(results => {
-                    if (!results) {
-                        console.error("Unable to reach supplied Repo URL")
-                        throw "Please confoirm the supplied repo URL is correct and try again"
-                    }
-                    if (!results.data.email) {
-                        eMailAddr = "None Provided"
-                    } else {
-                        eMailAddr = (results.data.email)
-                    }
+                if (!data.email) {
+                    eMailAddr = ""
+                } else {
+                    eMailAddr = (data.email)
+                }
 
-                    docData["UserName"] = answers.userName
-                    docData["RepoName"] = repoName
-                    docData["ProfileImage"] = results.data.avatar_url
-                    docData["eMail"] = eMailAddr
-                })
-                .then(() => {
-
-                    Badges()
-                })
+                docData["UserName"] = answers.userName
+                docData["Name"] = data.name
+                docData["RepoName"] = repoName
+                docData["ProfileImage"] = data.avatar_url
+                docData["eMail"] = eMailAddr
             })
-    }
-
-    function Badges() {
-
-        inquirer.prompt(Questions.IsBadgeNeeded).then(answers => {
-
-            if (answers.IsNeeded == true) {
-                // Go to next step
-                GetBadges()
-            } else {
-                // Go to next step
-                Contributors()
-            }
-        })
-    }
-
-    function GetBadges() {
-
-        var BadgeTable = []
-        BadgeTable[0] = "![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)"
-        BadgeTable[1] = "![GitHub Last Commit](https://img.shields.io/github/last-commit/" + docData.UserName + "/" + docData.RepoName + "?style=plastic)"
-        BadgeTable[2] = "![GitHub](https://img.shields.io/github/license/" + docData.UserName + "/" + docData.RepoName + "?style=plastic)"
-        var badges = []
-
-        inquirer.prompt(Questions.Badges).then(answers => {
-
-            (answers.Choices).map(item => {
-
-                var selection = item.split(":")[0]
-                var index = selection - 1
-                badges.push(BadgeTable[index])
+            .then(() => {
+                AskDocTitle()
             })
-            docData["Badges"] = badges;
-        }).then(() => {
+    })
+}
 
-            // Go to next step
+function AskDocTitle() {
+
+    inquirer.prompt(Questions.AskDocumemtTitle).then(answer => {
+        docData["DocumentTitle"] = answer.DocumentTitle
+
+    }).then(() => {
+        SelectLicense()
+    })
+}
+
+function SelectLicense() {
+
+    var options = Object.keys(licenseDict)
+
+    inquirer.prompt(Questions.SelectLicense(options)).then(answers => {
+        var license = licenseDict[answers.SelectedLicense]
+
+        docData["License"] = answers.SelectedLicense
+        GetLicenseText(license.url)
+
+    }).then(() => {
+        IsBadgeNeeded()
+    })
+}
+
+
+function IsBadgeNeeded() {
+    inquirer.prompt(Questions.IsBadgeNeeded).then(answers => {
+
+        if (answers.IsNeeded == true) {
+            SelectBadge()
+        } else {
             DocumentBody()
+        }
+    })
+}
+
+function SelectBadge() {
+
+    var BadgeDict = []
+    var badgeArr = []
+
+    BadgeDict["Latest Node version badge"] = "![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)"
+    BadgeDict["GitHub, last commit badge"] = "![GitHub Last Commit](https://img.shields.io/github/last-commit/" + docData.UserName + "/" + docData.RepoName + "?style=plastic)"
+    BadgeDict["License Badge"] = "![GitHub](https://img.shields.io/github/license/" + docData.UserName + "/" + docData.RepoName + "?style=plastic)"
+
+    var options = Object.keys(BadgeDict)
+    inquirer.prompt(Questions.SelectBadge(options)).then(answers => {
+        (answers.Choices).map(item => {
+            badgeArr.push(BadgeDict[item])
+        })
+
+        docData["Badges"] = badgeArr
+    }).then(() => {
+        DocumentBody()
+    })
+}
+
+
+function DocumentBody() {
+    // Prompt for document body sections and add to docData for display in ReadMe
+    inquirer.prompt(Questions.DocumentQuestions).then(answers => {
+
+        docData["ShowToc"] = answers.ShowTOC
+        docData["DescriptionText"] = answers.DescriptionText
+        docData["Install"] = answers.Install
+        docData["Usage"] = answers.Usage
+        docData["Contributing"] = answers.Contributing
+        docData["Testing"] = answers.Testing
+
+        docData["Contact"] = answers.Contact
+
+    }).then(() => {
+
+        var markdown = MarkDown(docData)
+
+        // Write markdown array to file
+        WriteToFile("README.MD", markdown)
+    })
+}
+
+function GetLicenseText(LicenseApiUrl) {
+
+    axios.get(LicenseApiUrl).then(results => {
+
+        if (!results) {
+            throw ("Unable to reach License API for license text")
+        }
+
+        LicenseParser(results)
+    })
+}
+
+
+function LicenseParser(results) {
+
+    var year = (new Date()).getFullYear()
+    var AuthorName = docData["Name"]
+
+    var foundYear = false
+    var foundName = false
+
+    //Used to detect when a change is made
+    var rawText = results.data.body
+    var licenseText = rawText
+
+    // Document tag replacements
+    var nameFields = [
+        "fullname",
+        "name",
+        "name of copyright owner",
+        "name of author"
+    ]
+
+    var yearFields = [
+        "year",
+        "yyyy"
+    ]
+
+    var braces = [
+        "[ ]",
+        "[[ ]]",
+        "< >",
+        "<< >>"
+    ]
+
+    // Loop through dyanmically created tag fields replacing in document
+    braces.forEach(brace => {
+
+        if (!(foundName && foundYear)) {
+
+            if (!foundName) {
+                nameFields.forEach(nameField => {
+
+                    tag = brace.replace(" ", nameField)
+                    licenseText = rawText.replace(tag, AuthorName)
+
+                    if (licenseText != rawText) {
+                        foundName = true
+                        rawText = licenseText //Update for next test
+                    }
+                })
+            }
+
+            if (!foundYear) {
+                yearFields.forEach(yearField => {
+                    tag = brace.replace(" ", yearField)
+                    licenseText = rawText.replace(tag, year)
+
+                    if (licenseText != rawText) {
+                        foundYear = true
+                        rawText = licenseText //Update for next test
+                    }
+                })
+            }
+        }
+    })
+    WriteToFile("LICENSE", licenseText)
+} // Close: function
+
+
+function WriteToFile(FileName, Data) {
+
+    // Throw error if no data is passed
+    if (!Data) {
+        throw "Error: Cannot write file.  No data passed to function"
+    }
+
+    var FILESTREAM = fs.createWriteStream(FileName)
+
+    //Error handler
+    FILESTREAM.on('error', function (err) {
+        console.log("Error opening Filehandle")
+        console.log(err)
+    })
+
+    if (typeof (Data) == "string") {
+        FILESTREAM.write(`${Data}\n`)
+
+    } else {
+
+        // Hash,Write array 1 element per line
+        Data.map(arrayElement => {
+            FILESTREAM.write(`${arrayElement}\n`)
         })
     }
 
+    FILESTREAM.end
+}
 
-    function DocumentBody() {
-        // Prompt for document body sections and add to docData for display in ReadMe
-        inquirer.prompt(Questions.Document).then(answers => {
-            docData["DocTitle"] = answers.DocTitle
-            docData["ShowToc"] = answers.ShowTOC
-            docData["DescriptionText"] = answers.DescriptionText
-            docData["Install"] = answers.Install
-            docData["Usage"] = answers.Usage
-            docData["Contributing"] = answers.Contributing
-            docData["Testing"] = answers.Testing
-            docData["License"] = answers.License.split(". ")[1]
-            docData["Contact"] = answers.Contact
+function PrintHeader(HeaderText) {
 
-        }).then(() => {
-            var markdown = MarkDown(docData)
+    const length = HeaderText.length + 4
+    const bar = "-".repeat(length)
 
-            console.log(markdown)
+    const header = bar + "\n  " + HeaderText + "  \n" +bar
+    console.log( colors.brightGreen(header) )
 
-            // Write markdown array to file
-            writeToFile(markdown)
-        })
-    }
-
-
-
-    function writeToFile(dataArray) {
-        var fileName = "README.MD"
-
-        //Open file handle
-        var FILESTREAM = fs.createWriteStream(fileName)
-
-        //Error handler
-        FILESTREAM.on('error', function (err) {
-            console.log("Error opening Filehandle")
-            console.log(err)
-        })
-
-        //Write array 1 element per line
-        dataArray.forEach(arrayElement => FILESTREAM.write(`${arrayElement}\n`))
-        console.log("Complete. " + fileName)
-
-        FILESTREAM.end
-    }
-
-
-    init();
+}
