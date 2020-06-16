@@ -1,5 +1,3 @@
-
-
 module.exports = {
 
   // ####################################################
@@ -13,12 +11,20 @@ module.exports = {
         message: "Please enter your GitHub username:",
         default: "ecorreale"
       },
+
       {
         type: "input",
         name: "repoName",
         message: "\nWhat is the GitHub project Name:",
         default: "09-ReadmeGenerator"
-      }]
+      },
+      {
+        type: "input",
+        name: "Author",
+        message: "\nAuthor's Display Name? ",
+        default: "Ernest Correale"
+      }
+    ]
     return AccountQuestions
   },
 
@@ -27,12 +33,11 @@ module.exports = {
   //             Document Title Question
   // ####################################################
 
-    AskDocumemtTitle: AskDocumemtTitle = {
+  AskDocumemtTitle: AskDocumemtTitle = {
     type: "input",
     name: "DocumentTitle",
     message: "\nTitle for your readme document? ",
     default: "Readme Generator"
-
   },
 
   // ####################################################
@@ -77,45 +82,52 @@ module.exports = {
   // ####################################################
   //          Document Body Content Questions
   // ####################################################
-  DocumentQuestions:DocumentQuestions = [
+  DocumentQuestions: DocumentQuestions = [
 
     {
       type: "confirm",
       name: "ShowTOC",
       message: "\nWould you like to display a Table of Contents? "
     },
-
+    {
+      type: "input",
+      name: "SummaryText",
+      message: "\nBrief one sentance summary:",
+      default: "Creates a project readme as well as license file based on user inputs."
+    },
     {
       type: "input",
       name: "DescriptionText",
-      message: "\nProject Description Text",
+      message: "\nProject Description Text:",
       default: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
 
     {
       type: "input",
       name: "Install",
-      message: "\nInstallation Instructions\nWhat are the steps required to install your project? ",
-      default: "Install steps to follow"
+      message: "\nPlease enter install instructions if any: ",
+      default: "1. Clone repo 2. Do the hokie-pokie"
     },
 
     {
       type: "input",
       name: "Usage",
-      message: "\nUsage Section\nProvide instructions and examples for use. ",
-      default: "Instuctions for the project"
+      message: "\nUsage Section\nProvide instructions and examples for use: ",
+      default: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
     },
 
     {
       type: "input",
       name: "Testing",
-      message: "\nSection: Testing\nCan you provide test instructions"
+      message: "\nProvide testing details if any?",
+      default: "Tested extensivly"
     },
 
     {
       type: "input",
       name: "Contributing",
-      message: "\nPlease enter Contributing text if any"
+      message: "\nWould you like to detail how others may contribute? ",
+      default: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
 
     {
@@ -126,4 +138,3 @@ module.exports = {
     }
   ]
 } // Close Module.Exports
-

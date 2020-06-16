@@ -54,10 +54,11 @@ function init() {
                 }
 
                 docData["UserName"] = answers.userName
-                docData["Name"] = data.name
+                docData["Author"] = answers.Author
                 docData["RepoName"] = repoName
                 docData["ProfileImage"] = data.avatar_url
                 docData["eMail"] = eMailAddr
+
             })
             .then(() => {
                 AskDocTitle()
@@ -129,12 +130,12 @@ function DocumentBody() {
     inquirer.prompt(Questions.DocumentQuestions).then(answers => {
 
         docData["ShowToc"] = answers.ShowTOC
+        docData["SummaryText"] = answers.SummaryText
         docData["DescriptionText"] = answers.DescriptionText
         docData["Install"] = answers.Install
         docData["Usage"] = answers.Usage
         docData["Contributing"] = answers.Contributing
         docData["Testing"] = answers.Testing
-
         docData["Contact"] = answers.Contact
 
     }).then(() => {
@@ -162,7 +163,7 @@ function GetLicenseText(LicenseApiUrl) {
 function LicenseParser(results) {
 
     var year = (new Date()).getFullYear()
-    var AuthorName = docData["Name"]
+    var AuthorName = docData["Author"]
 
     var foundYear = false
     var foundName = false
@@ -222,6 +223,7 @@ function LicenseParser(results) {
             }
         }
     })
+    docData["licenseText"] = licenseText
     WriteToFile("LICENSE", licenseText)
 } // Close: function
 
