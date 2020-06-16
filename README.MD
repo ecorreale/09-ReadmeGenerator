@@ -2,35 +2,28 @@
 
 <img src='https://avatars3.githubusercontent.com/u/47666377?v=4' height='135' style='float:left;margin:10px'>
 
-<div style='float:right;margin-right:35px;;margin-top:-20px'>
-
-#### Table of Contents
-
-- [Readme Generator](#)
-  - [Description](#Description)
-  - [Usage](#Usage)
-  - [License](#License)
-  - [Comments](#Comments)
-  - [Installation](#Installation)
- 
-</div>
-<div style='min-height:145px;'
-
 **Author:** Ernest Correale
 <br/>
 **License:** MIT License
 <br/>
-**Summary:** Creates a project readme as well as license file based on user inputs.
-
-</div>
-
 ![node-current (scoped)](https://img.shields.io/node/v/@stdlib/stdlib?style=plastic)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/ecorreale/09-ReadmeGenerator?style=plastic)
 ![GitHub](https://img.shields.io/github/license/ecorreale/09-ReadmeGenerator?style=plastic)
+#### Table of Contents
+
+- [Readme Generator](#)
+  - [Description](#Description)
+  - [Installation](#Installation)
+  - [Usage](#Usage)
+  - [License](#License)
+  - [Contributing](#Contributing)
+# Summary
+Creates a project readme as well as license file based on user inputs.
+ 
 # Description
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
  
-# Installation Instructions
+# Installation
 1. Clone repo 2. Do the hokie-pokie
  
 # Usage
